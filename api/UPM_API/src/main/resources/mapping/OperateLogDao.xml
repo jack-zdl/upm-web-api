@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.OperateLogDao">
+	<resultMap id="ResultMap" type="com.api.entity.OperateLogEntity">
+		<id property="id" column="id" />
+		<result property="operateModelName" column="operate_model_name" />
+		<result property="operateAction" column="operate_action" />
+		<result property="operateObjId" column="operate_obj_id" />
+		<result property="operateObjName" column="operate_obj_name" />
+		<result property="operateLoginName" column="operate_login_name" />
+		<result property="operateDateTime" column="operate_datetime" />
+		<result property="operateStatus" column="operate_status" />
+	</resultMap>
+
+	<insert id="save" parameterType="com.api.entity.OperateLogEntity">
+		INSERT INTO tbl_operate_log 
+		(
+			id,
+			operate_model_name, 
+			operate_action,
+			operate_obj_id,
+			operate_obj_name,
+			operate_login_name,
+			operate_datetime,
+			operate_status
+		)
+		VALUES 
+		(
+			#{id},
+			#{operateModelName},
+			#{operateAction},
+			#{operateObjId},
+			#{operateObjName},
+			#{operateLoginName},
+			#{operateDateTime},
+			#{operateStatus}
+		)							
+	</insert>
+</mapper>

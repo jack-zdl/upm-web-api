@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.DictTypeDao">
+	<resultMap id="ResultMap" type="com.api.entity.DictTypeEntity">
+		<id property="code" column="code" />
+		<result property="name" column="name" />
+		<collection property="dictList" ofType="com.api.entity.DictEntity">
+			<id property="code" column="dict_code" />
+			<result property="name" column="dict_name" />
+		</collection>
+	</resultMap>
+
+	<select id="list" resultMap="ResultMap" parameterType="java.util.Map">
+		SELECT a.code, a.name, b.code AS dict_code, b.name AS dict_name 
+		FROM tbl_dict_type a 
+		LEFT JOIN tbl_dict b ON b.dict_type_code = a.code 
+	</select>
+
+</mapper>

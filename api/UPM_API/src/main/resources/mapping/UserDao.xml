@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.UserDao">
+	<resultMap id="ResultMap" type="com.api.entity.UserEntity">
+		<id property="loginName" column="login_name" />
+		<result property="password" column="password" />
+		<result property="telephone" column="telephone" />
+		<result property="email" column="email" />
+		<result property="company" column="company" />
+		<result property="validate" column="validate" />
+		<result property="latestLoginDateTime" column="latest_login_datetime" />
+		<association property="userGroup" javaType="com.api.entity.UserGroupEntity">
+			<id property="id" column="user_group_id" />
+			<result property="name" column="user_group_name" />
+		</association>
+		<association property="userRole" javaType="com.api.entity.UserRoleEntity">
+			<id property="code" column="code" />
+			<result property="name" column="user_role_name" />
+			<result property="level" column="level" />
+			<result property="description" column="description" />
+			<result property="visible" column="visible" />
+		</association>
+	</resultMap>
+	<!-- 根据指定条件查询用户信息 -->
+	<select id="getUser" resultMap="ResultMap" parameterType="java.util.Map">
+		SELECT u.login_name, u.password, u.telephone, u.email, u.company, u.validate, u.latest_login_datetime,
+			g.id AS user_group_id, g.name AS user_group_name, 
+			r.code, r.name AS user_role_name, r.level, r.description, r.visible 
+		FROM tbl_user u 
+		LEFT JOIN tbl_user_group g ON g.id = u.user_group_id 
+		LEFT JOIN tbl_user_role r ON r.code = u.user_role_code 
+		WHERE (u.login_name = #{loginName} 
+		  	OR u.email = #{loginName} 
+		  	OR u.telephone = #{loginName})
+		<if test="password!=null and password!=''">
+			AND u.password = #{password}
+		</if>  
+	</select>
+
+	<update id="updateLatestLoginDateTime" parameterType="com.api.entity.UserEntity">
+		UPDATE tbl_user u 
+		<set>
+			u.latest_login_datetime = #{latestLoginDateTime} 
+		</set>
+		WHERE u.login_name = #{loginName} 
+	</update>
+</mapper>

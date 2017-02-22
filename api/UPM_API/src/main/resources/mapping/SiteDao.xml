@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.SiteDao">
+	<resultMap id="ResultMap" type="com.api.entity.SiteEntity">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="regionCode" column="region_code" />
+		<result property="consulIps" column="consul_ips" />
+		<result property="consulPort" column="consul_port" />
+		<result property="consulToken" column="consul_token" />
+		<result property="mgmCa" column="mgm_ca" />
+		<result property="horusServerCa" column="horus_server_ca" />
+		<result property="mgmPrefix" column="mgm_prefix" />
+		<result property="horusServerPrefix" column="horus_server_prefix" />
+		<result property="createDatetime" column="create_datetime" />
+		<result property="createLoginUserName" column="create_user_login_name" />
+	</resultMap>
+
+	<insert id="save" parameterType="com.api.dto.SiteDto">
+		INSERT INTO tbl_site 
+		(
+			id,
+			name, 
+			region_code,
+			consul_ips,
+			consul_port,
+			consul_token,
+			mgm_ca,
+			horus_server_ca,
+			mgm_prefix,
+			horus_server_prefix,
+			create_datetime,
+			create_user_login_name
+		)
+		VALUES 
+		(
+			#{id},
+			#{name},
+			#{regionCode},
+			#{consulIps},
+			#{consulPort},
+			#{consulToken},
+			#{mgmCa},
+			#{horusServerCa},
+			#{mgmPrefix},
+			#{horusServerPrefix},
+			#{createDatetime},
+			#{createLoginUserName}
+		)							
+	</insert>
+	
+	<select id="list" resultMap="ResultMap" parameterType="java.util.Map">
+		SELECT s.id, s.name, s.region_code 
+		FROM SITE s
+	</select>
+	
+	<delete id="remove">
+		DELETE FROM SITE 
+		WHETE id = #{id}
+	</delete>
+</mapper>
