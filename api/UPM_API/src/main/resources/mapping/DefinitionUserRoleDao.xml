@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.DefinitionUserRoleDao">
+	<resultMap id="ResultMap" type="com.api.entity.DefinitionUserRoleEntity">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="definitionSubServName" column="definition_subserv_name" />
+		<result property="privilege" column="privilege" />
+		<result property="visible" column="visible" />
+	</resultMap>
+
+	<select id="listPrimarySubServUserRole" parameterType="java.util.Map" resultMap="ResultMap">
+		SELECT DISTINCT dur.*
+		FROM tbl_definition_subserv dss,
+			tbl_definition_serv_subserv dsss,
+			tbl_definition_user_role dur
+		WHERE dss.id = dsss.definition_subserv_id 
+			AND dss.name = dur.definition_subserv_name
+			AND dsss.primary = 1 
+			AND dss.user_manager = 1 
+			AND dur.visible = 1
+			AND dsss.definition_serv_id = #{definitionServId}
+	</select>
+
+</mapper>

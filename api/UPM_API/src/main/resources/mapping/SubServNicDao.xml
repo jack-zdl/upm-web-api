@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.SubServNicDao">
+
+	<insert id="save" parameterType="com.api.entity.SubServNicEntity">
+		INSERT INTO tbl_subserv_nic
+		(
+			id,
+			subserv_id,
+			nic_phy_type,
+			nic_ha_type,
+			network_bandwidth
+		)
+		VALUE
+		(
+			#{id},
+			#{subServ.id},
+			#{nicPhyType},
+			#{nicHaType},
+			#{networkBandWidth}
+		)
+	</insert>
+	
+	<delete id="remove">
+		DELETE FROM tbl_subserv_nic 
+		WHERE subserv_id = #{subServId}
+	</delete>
+
+</mapper>

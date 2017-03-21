@@ -33,27 +33,27 @@ public class SiteDto extends BaseDto implements Serializable {
 	/**
 	 * µØÓòÃû³Æ
 	 */
-	private String regionName;
+	private String regionText;
 
 	/**
 	 * mgm×´Ì¬±àÂë
 	 */
-	private int mgmStatusCode;
+	private String mgmStatusCode;
 
 	/**
-	 * mgm×´Ì¬Ãû³Æ
+	 * mgm×´Ì¬ÏÔÊ¾
 	 */
-	private String mgmStatusName;
+	private String mgmStatusText;
 
 	/**
 	 * horus_server×´Ì¬±àÂë
 	 */
-	private int hsStatusCode;
+	private String hsStatusCode;
 
 	/**
-	 * horus_server×´Ì¬Ãû³Æ
+	 * horus_server×´Ì¬ÏÔÊ¾
 	 */
-	private String hsStatusName;
+	private String hsStatusText;
 
 	/**
 	 * »ñÈ¡Õ¾µã±àÂë
@@ -115,20 +115,20 @@ public class SiteDto extends BaseDto implements Serializable {
 	/**
 	 * »ñÈ¡µØÓòÃû³Æ
 	 *
-	 * @return regionName µØÓòÃû³Æ
+	 * @return regionText µØÓòÃû³Æ
 	 */
-	public String getRegionName() {
-		return regionName;
+	public String getRegionText() {
+		return regionText;
 	}
 
 	/**
 	 * ÉèÖÃµØÓòÃû³Æ
 	 *
-	 * @param regionName
+	 * @param regionText
 	 *            µØÓòÃû³Æ
 	 */
-	public void setRegionName(String regionName) {
-		this.regionName = regionName;
+	public void setRegionText(String regionText) {
+		this.regionText = regionText;
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class SiteDto extends BaseDto implements Serializable {
 	 *
 	 * @return mgmStatusCode mgm×´Ì¬±àÂë
 	 */
-	public int getMgmStatusCode() {
+	public String getMgmStatusCode() {
 		return mgmStatusCode;
 	}
 
@@ -146,27 +146,27 @@ public class SiteDto extends BaseDto implements Serializable {
 	 * @param mgmStatusCode
 	 *            mgm×´Ì¬±àÂë
 	 */
-	public void setMgmStatusCode(int mgmStatusCode) {
+	public void setMgmStatusCode(String mgmStatusCode) {
 		this.mgmStatusCode = mgmStatusCode;
 	}
 
 	/**
-	 * »ñÈ¡mgm×´Ì¬Ãû³Æ
+	 * »ñÈ¡mgm×´Ì¬ÏÔÊ¾
 	 *
-	 * @return mgmStatusName mgm×´Ì¬Ãû³Æ
+	 * @return mgmStatusText mgm×´Ì¬ÏÔÊ¾
 	 */
-	public String getMgmStatusName() {
-		return mgmStatusName;
+	public String getMgmStatusText() {
+		return mgmStatusText;
 	}
 
 	/**
-	 * ÉèÖÃmgm×´Ì¬Ãû³Æ
+	 * ÉèÖÃmgm×´Ì¬ÏÔÊ¾
 	 *
-	 * @param mgmStatusName
-	 *            mgm×´Ì¬Ãû³Æ
+	 * @param mgmStatusText
+	 *            mgm×´Ì¬ÏÔÊ¾
 	 */
-	public void setMgmStatusName(String mgmStatusName) {
-		this.mgmStatusName = mgmStatusName;
+	public void setMgmStatusText(String mgmStatusText) {
+		this.mgmStatusText = mgmStatusText;
 	}
 
 	/**
@@ -174,7 +174,7 @@ public class SiteDto extends BaseDto implements Serializable {
 	 *
 	 * @return hsStatusCode horus_server×´Ì¬±àÂë
 	 */
-	public int getHsStatusCode() {
+	public String getHsStatusCode() {
 		return hsStatusCode;
 	}
 
@@ -184,27 +184,27 @@ public class SiteDto extends BaseDto implements Serializable {
 	 * @param hsStatusCode
 	 *            horus_server×´Ì¬±àÂë
 	 */
-	public void setHsStatusCode(int hsStatusCode) {
+	public void setHsStatusCode(String hsStatusCode) {
 		this.hsStatusCode = hsStatusCode;
 	}
 
 	/**
-	 * »ñÈ¡horus_server×´Ì¬Ãû³Æ
+	 * »ñÈ¡horus_server×´Ì¬ÏÔÊ¾
 	 *
-	 * @return hsStatusName horus_server×´Ì¬Ãû³Æ
+	 * @return hsStatusText horus_server×´Ì¬ÏÔÊ¾
 	 */
-	public String getHsStatusName() {
-		return hsStatusName;
+	public String getHsStatusText() {
+		return hsStatusText;
 	}
 
 	/**
-	 * ÉèÖÃhorus_server×´Ì¬Ãû³Æ
+	 * ÉèÖÃhorus_server×´Ì¬ÏÔÊ¾
 	 *
-	 * @param hsStatusName
-	 *            horus_server×´Ì¬Ãû³Æ
+	 * @param hsStatusText
+	 *            horus_server×´Ì¬ÏÔÊ¾
 	 */
-	public void setHsStatusName(String hsStatusName) {
-		this.hsStatusName = hsStatusName;
+	public void setHsStatusText(String hsStatusText) {
+		this.hsStatusText = hsStatusText;
 	}
 
 	/*
@@ -214,9 +214,9 @@ public class SiteDto extends BaseDto implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "SiteDto [id=" + id + ", name=" + name + ", regionCode=" + regionCode + ", regionName=" + regionName
-				+ ", mgmStatusCode=" + mgmStatusCode + ", mgmStatusName=" + mgmStatusName + ", hsStatusCode="
-				+ hsStatusCode + ", hsStatusName=" + hsStatusName + "]";
+		return "SiteDto [id=" + id + ", name=" + name + ", regionCode=" + regionCode + ", regionText=" + regionText
+				+ ", mgmStatusCode=" + mgmStatusCode + ", mgmStatusText=" + mgmStatusText + ", hsStatusCode="
+				+ hsStatusCode + ", hsStatusText=" + hsStatusText + "]";
 	}
 
 }

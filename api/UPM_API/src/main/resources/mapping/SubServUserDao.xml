@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.SubServUserDao">
+
+	<insert id="save" parameterType="com.api.entity.SubServUserEntity">
+		INSERT INTO tbl_subserv_user
+		(
+			id,
+			subserv_id,
+			username,
+			password,
+			definition_user_role_id,
+			mapping_suborder_user_id
+		)
+		VALUE
+		(
+			#{id},
+			#{subServ.id},
+			#{username},
+			#{password},
+			#{definitionUserRole.id},
+			#{mappingSubOrderUserId}
+		)
+	</insert>
+	
+	<delete id="remove">
+		DELETE FROM tbl_subserv_user
+		WHERE subserv_id = #{subServId}
+	</delete>
+</mapper>

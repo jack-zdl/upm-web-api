@@ -2,6 +2,12 @@ package com.api.entity;
 
 import java.io.Serializable;
 
+/**
+ * 站点实体类
+ * 
+ * @author HCK
+ *
+ */
 public class SiteEntity extends BaseEntity implements Serializable {
 
 	/**
@@ -47,17 +53,17 @@ public class SiteEntity extends BaseEntity implements Serializable {
 	/**
 	 * 监控管理服务（horus server）认证证书
 	 */
-	private String hoursServerCa;
+	private String horusServerCa;
 
 	/**
 	 * 资源管理过滤条件
 	 */
-	private String msgPrefix;
+	private String mgmPrefix;
 
 	/**
 	 * 监控管理过滤条件
 	 */
-	private String hoursServerPrefix;
+	private String horusServerPrefix;
 
 	/**
 	 * 获取站点编码
@@ -197,56 +203,56 @@ public class SiteEntity extends BaseEntity implements Serializable {
 	 *
 	 * @return hoursServerCa 监控管理服务（horus server）认证证书
 	 */
-	public String getHoursServerCa() {
-		return hoursServerCa;
+	public String getHorusServerCa() {
+		return horusServerCa;
 	}
 
 	/**
 	 * 设置监控管理服务（horus server）认证证书
 	 *
-	 * @param hoursServerCa
+	 * @param horusServerCa
 	 *            监控管理服务（horus server）认证证书
 	 */
-	public void setHoursServerCa(String hoursServerCa) {
-		this.hoursServerCa = hoursServerCa;
+	public void setHorusServerCa(String horusServerCa) {
+		this.horusServerCa = horusServerCa;
 	}
 
 	/**
 	 * 获取资源管理过滤条件
 	 *
-	 * @return msgPrefix 资源管理过滤条件
+	 * @return mgmPrefix 资源管理过滤条件
 	 */
-	public String getMsgPrefix() {
-		return msgPrefix;
+	public String getMgmPrefix() {
+		return mgmPrefix;
 	}
 
 	/**
 	 * 设置资源管理过滤条件
 	 *
-	 * @param msgPrefix
+	 * @param mgmPrefix
 	 *            资源管理过滤条件
 	 */
-	public void setMsgPrefix(String msgPrefix) {
-		this.msgPrefix = msgPrefix;
+	public void setMgmPrefix(String mgmPrefix) {
+		this.mgmPrefix = mgmPrefix;
 	}
 
 	/**
 	 * 获取监控管理过滤条件
 	 *
-	 * @return hoursServerPrefix 监控管理过滤条件
+	 * @return horusServerPrefix 监控管理过滤条件
 	 */
-	public String getHoursServerPrefix() {
-		return hoursServerPrefix;
+	public String getHorusServerPrefix() {
+		return horusServerPrefix;
 	}
 
 	/**
 	 * 设置监控管理过滤条件
 	 *
-	 * @param hoursServerPrefix
+	 * @param horusServerPrefix
 	 *            监控管理过滤条件
 	 */
-	public void setHoursServerPrefix(String hoursServerPrefix) {
-		this.hoursServerPrefix = hoursServerPrefix;
+	public void setHorusServerPrefix(String horusServerPrefix) {
+		this.horusServerPrefix = horusServerPrefix;
 	}
 
 	/*
@@ -258,8 +264,8 @@ public class SiteEntity extends BaseEntity implements Serializable {
 	public String toString() {
 		return "SiteEntity [id=" + id + ", name=" + name + ", regionCode=" + regionCode + ", consulIps=" + consulIps
 				+ ", consulPort=" + consulPort + ", consulToken=" + consulToken + ", mgmCa=" + mgmCa
-				+ ", hoursServerCa=" + hoursServerCa + ", msgPrefix=" + msgPrefix + ", hoursServerPrefix="
-				+ hoursServerPrefix + "]";
+				+ ", horusServerCa=" + horusServerCa + ", mgmPrefix=" + mgmPrefix + ", horusServerPrefix="
+				+ horusServerPrefix + "]";
 	}
 
 }

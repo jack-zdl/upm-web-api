@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.DefinitionSubServUnitScaleDao">
+	<resultMap id="ResultMap" type="com.api.entity.DefinitionSubServUnitScaleEntity">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="definitionSubServName" column="definition_subserv_name" />
+		<result property="cpuNum" column="cpu_num" />
+		<result property="memSize" column="mem_size" />
+		<result property="networkBandwidth" column="network_bandwidth" />
+		<result property="ioWeight" column="io_weight" />
+	</resultMap>
+
+	<select id="listPrimarySubServUnitScale" parameterType="java.util.Map" resultMap="ResultMap">
+		SELECT DISTINCT dssus.*
+		FROM tbl_definition_subserv_unit_scale dssus,
+			tbl_definition_serv_subserv dsss
+		WHERE dssus.definition_subserv_id = dsss.definition_subserv_id 
+			AND dsss.primary = 1
+			AND dsss.definition_serv_id = #{definitionServId}
+	</select>
+	
+	<select id="get" resultMap="ResultMap">
+		SELECT dssus.*
+		FROM tbl_definition_subserv_unit_scale dssus
+		WHERE dssus.id = #{id}
+	</select>
+
+</mapper>

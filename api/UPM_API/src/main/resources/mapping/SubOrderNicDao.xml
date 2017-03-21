@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.SubOrderNicDao">
+	<resultMap id="ResultMap" type="com.api.entity.SubOrderNicEntity">
+		<id property="id" column="id" />
+		<result property="nicPhyType" column="nic_phy_type" />
+		<result property="nicHaType" column="nic_ha_type" />
+		<result property="networkBandWidth" column="network_bandwidth" />
+		<association property="subOrder" javaType="com.api.entity.SubOrderEntity">
+			<id property="id" column="suborder_id" />
+		</association>
+	</resultMap>
+
+	<insert id="save" parameterType="com.api.entity.SubOrderNicEntity">
+		INSERT INTO tbl_suborder_nic
+		(
+			id,
+			suborder_id,
+			nic_phy_type,
+			nic_ha_type,
+			network_bandwidth
+		)
+		VALUE
+		(
+			#{id},
+			#{subOrder.id},
+			#{nicPhyType},
+			#{nicHaType},
+			#{networkBandWidth}
+		)
+	</insert>
+	
+	<delete id="remove">
+		DELETE FROM tbl_suborder_nic 
+		WHERE suborder_id = #{subOrderId}
+	</delete>
+
+</mapper>

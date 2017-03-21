@@ -8,6 +8,14 @@ public class RespJson implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	public static final int SUCCESS = 1;
+
+	public static final int WARNING = 0;
+
+	public static final int FAIL = -1;
+	
+	public static final int NOTLOGIN = -9;
 
 	private int result;
 	private Integer code;

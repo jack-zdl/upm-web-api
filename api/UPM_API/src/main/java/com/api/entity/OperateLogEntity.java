@@ -1,7 +1,6 @@
 package com.api.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 操作日志实体类
@@ -9,7 +8,7 @@ import java.util.Date;
  * @author HCK
  *
  */
-public class OperateLogEntity implements Serializable {
+public class OperateLogEntity extends BaseEntity implements Serializable {
 
 	/**
 	 * 
@@ -24,37 +23,27 @@ public class OperateLogEntity implements Serializable {
 	/**
 	 * 操作模块名称
 	 */
-	private String operateModelName;
+	private String modelName;
 
 	/**
 	 * 操作动作
 	 */
-	private String operateAction;
+	private String action;
 
 	/**
 	 * 操作对象编码
 	 */
-	private String operateObjId;
+	private String objId;
 
 	/**
 	 * 操作对象名称
 	 */
-	private String operateObjName;
+	private String objName;
 
 	/**
-	 * 操作者
+	 * 操作结果信息
 	 */
-	private String operateLoginName;
-
-	/**
-	 * 操作时间
-	 */
-	private Date operateDateTime;
-
-	/**
-	 * 操作状态
-	 */
-	private Integer operateStatus;
+	private String msg;
 
 	/**
 	 * 获取操作日志编码
@@ -67,7 +56,7 @@ public class OperateLogEntity implements Serializable {
 
 	/**
 	 * 设置操作日志编码
-	 *
+	 * 
 	 * @param id
 	 *            操作日志编码
 	 */
@@ -78,134 +67,96 @@ public class OperateLogEntity implements Serializable {
 	/**
 	 * 获取操作模块名称
 	 *
-	 * @return operateModelName 操作模块名称
+	 * @return modelName 操作模块名称
 	 */
-	public String getOperateModelName() {
-		return operateModelName;
+	public String getModelName() {
+		return modelName;
 	}
 
 	/**
 	 * 设置操作模块名称
-	 *
-	 * @param operateModelName
+	 * 
+	 * @param modelName
 	 *            操作模块名称
 	 */
-	public void setOperateModelName(String operateModelName) {
-		this.operateModelName = operateModelName;
+	public void setModelName(String modelName) {
+		this.modelName = modelName;
 	}
 
 	/**
 	 * 获取操作动作
 	 *
-	 * @return operateAction 操作动作
+	 * @return action 操作动作
 	 */
-	public String getOperateAction() {
-		return operateAction;
+	public String getAction() {
+		return action;
 	}
 
 	/**
 	 * 设置操作动作
-	 *
-	 * @param operateAction
+	 * 
+	 * @param action
 	 *            操作动作
 	 */
-	public void setOperateAction(String operateAction) {
-		this.operateAction = operateAction;
+	public void setAction(String action) {
+		this.action = action;
 	}
 
 	/**
 	 * 获取操作对象编码
 	 *
-	 * @return operateObjId 操作对象编码
+	 * @return objId 操作对象编码
 	 */
-	public String getOperateObjId() {
-		return operateObjId;
+	public String getObjId() {
+		return objId;
 	}
 
 	/**
 	 * 设置操作对象编码
-	 *
-	 * @param operateObjId
+	 * 
+	 * @param objId
 	 *            操作对象编码
 	 */
-	public void setOperateObjId(String operateObjId) {
-		this.operateObjId = operateObjId;
+	public void setObjId(String objId) {
+		this.objId = objId;
 	}
 
 	/**
 	 * 获取操作对象名称
 	 *
-	 * @return operateObjName 操作对象名称
+	 * @return objName 操作对象名称
 	 */
-	public String getOperateObjName() {
-		return operateObjName;
+	public String getObjName() {
+		return objName;
 	}
 
 	/**
 	 * 设置操作对象名称
-	 *
-	 * @param operateObjName
+	 * 
+	 * @param objName
 	 *            操作对象名称
 	 */
-	public void setOperateObjName(String operateObjName) {
-		this.operateObjName = operateObjName;
+	public void setObjName(String objName) {
+		this.objName = objName;
 	}
 
 	/**
-	 * 获取操作者
+	 * 获取操作结果信息
 	 *
-	 * @return operateLoginName 操作者
+	 * @return msg 操作结果信息
 	 */
-	public String getOperateLoginName() {
-		return operateLoginName;
+	public String getMsg() {
+		return msg;
 	}
 
 	/**
-	 * 设置操作者
-	 *
-	 * @param operateLoginName
-	 *            操作者
+	 * 设置操作结果信息
+	 * 
+	 * @param msg
+	 *            操作结果信息
 	 */
-	public void setOperateLoginName(String operateLoginName) {
-		this.operateLoginName = operateLoginName;
-	}
-
-	/**
-	 * 获取操作时间
-	 *
-	 * @return operateDateTime 操作时间
-	 */
-	public Date getOperateDateTime() {
-		return operateDateTime;
-	}
-
-	/**
-	 * 设置操作时间
-	 *
-	 * @param operateDateTime
-	 *            操作时间
-	 */
-	public void setOperateDateTime(Date operateDateTime) {
-		this.operateDateTime = operateDateTime;
-	}
-
-	/**
-	 * 获取操作状态
-	 *
-	 * @return operateStatus 操作状态
-	 */
-	public Integer getOperateStatus() {
-		return operateStatus;
-	}
-
-	/**
-	 * 设置操作状态
-	 *
-	 * @param operateStatus
-	 *            操作状态
-	 */
-	public void setOperateStatus(Integer operateStatus) {
-		this.operateStatus = operateStatus;
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 
 	/*
@@ -215,10 +166,8 @@ public class OperateLogEntity implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "OperateLogEntity [id=" + id + ", operateModelName=" + operateModelName + ", operateAction="
-				+ operateAction + ", operateObjId=" + operateObjId + ", operateObjName=" + operateObjName
-				+ ", operateLoginName=" + operateLoginName + ", operateDateTime=" + operateDateTime + ", operateStatus="
-				+ operateStatus + "]";
+		return "OperateLogEntity [id=" + id + ", modelName=" + modelName + ", action=" + action + ", objId=" + objId
+				+ ", objName=" + objName + ", msg=" + msg + "]";
 	}
 
 }

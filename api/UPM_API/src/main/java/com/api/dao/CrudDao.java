@@ -13,42 +13,47 @@ import java.util.Map;
 public interface CrudDao<T> {
 
 	/**
-	 * 根据检索条件获取数据集合
+	 * 根据检索条件获取记录集合
 	 * 
 	 * @param param
-	 * @return
+	 *            参数键值对
+	 * @return 符合检索条件的记录集合
 	 */
 	List<T> list(Map<String, Object> param);
-	
+
 	/**
-	 * 获取单条数据
+	 * 获取单条记录
 	 * 
 	 * @param id
-	 * @return
+	 *            主键
+	 * @return 单条记录
 	 */
 	T get(String id);
 
 	/**
-	 * 插入数据
+	 * 保存记录
 	 * 
 	 * @param entity
-	 * @return
+	 *            记录实体类对象
+	 * @return 保存对象条数
 	 */
 	int save(T entity);
 
 	/**
-	 * 更新数据
+	 * 更新记录
 	 * 
 	 * @param entity
-	 * @return
+	 *            记录实体类对象
+	 * @return 更新对象条数
 	 */
 	int update(T entity);
 
 	/**
-	 * 删除数据
+	 * 删除记录
 	 * 
 	 * @param id
-	 * @return
+	 *            主键
+	 * @return 记录对象条数
 	 */
 	int remove(String id);
 }

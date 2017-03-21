@@ -70,13 +70,17 @@
 	</bean>
 	
 	<!-- 引入jdbc配置文件 -->  
-     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+     <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="locations">
             <list>
                <value>classpath:config/*.properties</value>
                 <!--要是有多个配置文件，只需在这里继续添加即可 -->
             </list>
         </property>
+    </bean>
+    
+     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <property name="properties" ref="configProperties"/>
     </bean>
 
 	<context:component-scan base-package="com" />

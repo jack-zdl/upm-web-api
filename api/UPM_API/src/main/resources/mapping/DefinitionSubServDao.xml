@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.DefinitionSubServDao">
+	<resultMap id="ResultMap" type="com.api.entity.DefinitionSubServEntity">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="icon" column="icon" />
+		<result property="type" column="type" />
+		<result property="defaultDataDirSize" column="default_data_dir_size" />
+		<result property="defaultDataDirDeviceType" column="default_data_dir_device_type" />
+		<result property="defaultLogDirSize" column="default_log_dir_size" />
+		<result property="defaultLogDirDeviceType" column="default_log_dir_device_type" />
+		<result property="defaultMaxBackupSpace" column="default_max_backup_space" />
+		<result property="defaultBackupFilesRetention" column="default_backup_files_retention" />
+		<result property="primary" column="primary" />
+		<result property="userManager" column="user_manager" />
+		<result property="defaultRootUserRoleId" column="default_root_user_role_id" />
+		<result property="defaultRootUsername" column="default_root_username" />
+		<result property="defaultRootPassword" column="default_root_password" />
+		<result property="defaultMonitorUsername" column="default_monitor_username" />
+		<result property="defaultMonitorPassword" column="default_monitor_password" />
+		<result property="defaultMonitorUserRoleId" column="default_monitor_user_role_id" />
+		<result property="defaultReplicationUsername" column="default_replication_username" />
+		<result property="defaultReplicationPassword" column="default_replication_password" />
+		<result property="defaultReplicationUserRoleId" column="default_replication_user_role_id" />
+		<association property="defaultDefinitionSubServArch" javaType="com.api.entity.DefinitionSubServArchEntity" >
+			<id property="id" column="default_definition_subserv_arch_id"/>
+		</association>
+		<association property="defaultDefinitionSubServUnitScale" javaType="com.api.entity.DefinitionSubServUnitScaleEntity" >
+			<id property="id" column="default_definition_subserv_unit_scale_id"/>
+		</association>
+	</resultMap>
+
+	<select id="listNameAndIcon" parameterType="java.util.Map" resultMap="ResultMap">
+		SELECT ds.id, ds.name, ds.icon 
+		FROM tbl_definition_subserv ds
+	</select>
+	
+	<select id="list" parameterType="java.util.Map" resultMap="ResultMap">
+		SELECT dss.id, dss.name,
+			dsss.primary, dsss.definition_subserv_arch_id AS default_definition_subserv_arch_id,
+			dss.default_data_dir_size, dss.default_data_dir_device_type,
+			dss.default_log_dir_size, dss.default_log_dir_device_type,
+			dss.default_max_backup_space, dss.default_backup_files_retention,
+			dss.user_manager,
+			dss.default_root_user_role_id, dss.default_root_username, dss.default_root_password,
+			dss.default_monitor_user_role_id, dss.default_monitor_username, dss.default_monitor_password,
+			dss.default_replication_user_role_id, dss.default_replication_username, dss.default_replication_password,
+			dssus.id AS default_definition_subserv_unit_scale_id
+		FROM tbl_definition_subserv dss,
+			tbl_definition_serv_subserv dsss,
+			tbl_definition_subserv_unit_scale dssus
+		WHERE dss.id = dsss.definition_subserv_id
+			AND dssus.definition_subserv_id = dss.id 
+			AND dssus.default = 1
+			AND dsss.default = 1
+			AND dsss.definition_serv_id = #{definitionServId}
+	</select>
+	
+	<select id="get" resultMap="ResultMap">
+		SELECT dss.* 
+		FROM tbl_definition_subserv dss
+		WHERE dss.id = #{id}
+	</select>
+
+</mapper>

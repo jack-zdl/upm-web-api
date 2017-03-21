@@ -12,11 +12,23 @@
 		<result property="horusServerCa" column="horus_server_ca" />
 		<result property="mgmPrefix" column="mgm_prefix" />
 		<result property="horusServerPrefix" column="horus_server_prefix" />
-		<result property="createDatetime" column="create_datetime" />
-		<result property="createLoginUserName" column="create_user_login_name" />
+		<result property="createDateTime" column="create_datetime" />
+		<result property="createUserLoginName" column="create_user_login_name" />
 	</resultMap>
+	
+	<select id="list" resultMap="ResultMap" parameterType="java.util.Map">
+		SELECT s.id, s.name, s.region_code, s.consul_ips, s.consul_port,  
+			mgm_prefix, horus_server_prefix 
+		FROM tbl_site s
+	</select>
+	
+	<select id="get" resultMap="ResultMap">
+		SELECT * 
+		FROM tbl_site s 
+		WHERE id = #{id}
+	</select>
 
-	<insert id="save" parameterType="com.api.dto.SiteDto">
+	<insert id="save" parameterType="com.api.entity.SiteEntity">
 		INSERT INTO tbl_site 
 		(
 			id,
@@ -44,18 +56,13 @@
 			#{horusServerCa},
 			#{mgmPrefix},
 			#{horusServerPrefix},
-			#{createDatetime},
-			#{createLoginUserName}
+			#{createDateTime},
+			#{createUserLoginName}
 		)							
 	</insert>
 	
-	<select id="list" resultMap="ResultMap" parameterType="java.util.Map">
-		SELECT s.id, s.name, s.region_code 
-		FROM SITE s
-	</select>
-	
 	<delete id="remove">
-		DELETE FROM SITE 
-		WHETE id = #{id}
+		DELETE FROM tbl_site 
+		WHERE id = #{id}
 	</delete>
 </mapper>

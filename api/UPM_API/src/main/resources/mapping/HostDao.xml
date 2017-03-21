@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.HostDao">
+	<resultMap id="ResultMap" type="com.api.entity.HostEntity">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="sshIp" column="ssh_ip" />
+		<result property="sshUser" column="ssh_user" />
+		<result property="sshPassword" column="ssh_password" />
+		<result property="room" column="room" />
+		<result property="seat" column="seat" />
+		<result property="maxContainer" column="max_container" />
+		<result property="hddDev" column="hdd_dev" />
+		<result property="ssdDev" column="ssd_dev" />
+		<result property="nicPhyType" column="nic_phy_type" />
+		<result property="relateId" column="relate_id" />
+		<result property="createDateTime" column="create_datetime" />
+		<result property="createUserLoginName" column="create_user_login_name" />
+		<association property="cluster" javaType="com.api.entity.ClusterEntity">
+			<id property="id" column="cluster_id" />
+			<result property="name" column="cluster_name" />
+			<result property="relateId" column="cluster_relate_id" />
+			<association property="area" javaType="com.api.entity.AreaEntity">
+				<id property="id" column="area_id" />
+				<result property="name" column="area_name" />
+				<association property="site" javaType="com.api.entity.SiteEntity">
+					<id property="id" column="site_id" />
+				</association>
+			</association>
+			<association property="nfsBackup" javaType="com.api.entity.NfsBackupEntity" >
+				<id property="id" column="nfs_backup_id"/>
+				<result property="name" column="nfs_backup_name"/>
+				<result property="nfsIp" column="nfs_ip" />
+				<result property="nfsDir" column="nfs_dir" />
+				<result property="nfsMountDir" column="nfs_mount_dir" />
+				<result property="nfsMountOpts" column="nfs_mount_opts" />
+			</association>
+		</association>
+	</resultMap>
+
+	<select id="list" parameterType="java.util.Map" resultMap="ResultMap">
+		SELECT h.*, c.name AS cluster_name, a.id AS area_id,a.name AS area_name
+		FROM tbl_host h, tbl_cluster c, tbl_area a 
+		WHERE h.cluster_id = c.id
+			AND c.area_id = a.id
+		<if test="siteId!=null and siteId!=''">
+		 	AND a.site_id = #{siteId}
+		</if>
+	</select>
+	
+	<select id="get" resultMap="ResultMap">
+		SELECT h.*, 
+			c.name AS cluster_name, c.area_id, c.nfs_backup_id, c.relate_id AS cluster_relate_id, 
+			nfs.name AS nfs_backup_name, nfs.nfs_ip, nfs.nfs_dir, nfs.nfs_mount_dir, nfs.nfs_mount_opts,
+			a.name AS area_name, a.site_id
+		FROM tbl_host h, tbl_cluster c, tbl_nfs_backup nfs, tbl_area a 
+		WHERE h.cluster_id = c.id 
+			AND c.nfs_backup_id = nfs.id 
+			AND c.area_id = a.id 
+			AND h.id = #{id}
+	</select>
+
+	<insert id="save" parameterType="com.api.entity.HostEntity">
+		INSERT INTO tbl_host
+		(
+			id,
+			cluster_id,
+			name,
+			ssh_ip,
+			ssh_user,
+			ssh_password,
+			room,
+			seat,
+			max_container,
+			hdd_dev,
+			ssd_dev,
+			san_id,
+			nic_phy_type,
+			relate_id,
+			create_datetime,
+			create_user_login_name
+		)
+		VALUE
+		(
+			#{id},
+			#{cluster.id},
+			#{name},
+			#{sshIp},
+			#{sshUser},
+			#{sshPassword},
+			#{room},
+			#{seat},
+			#{maxContainer},
+			#{hddDev},
+			#{ssdDev},
+			#{san.id},
+			#{nicPhyType},
+			#{relateId},
+			#{createDateTime},
+			#{createUserLoginName}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.api.entity.HostEntity">
+		UPDATE tbl_host
+		<set>
+			cluster_id = #{cluster.id},
+			name = #{name},
+			ssh_ip = #{sshIp},
+			ssh_user = #{sshUser},
+			ssh_password = #{sshPassword},
+			room = #{room},
+			seat = #{seat},
+			max_container = #{maxContainer},
+			hdd_dev = #{hddDev},
+			ssd_dev = #{ssdDev},
+			san_id = #{san.id},
+			nic_phy_type = #{nicPhyType},
+			relate_id = #{relateId},
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<delete id="remove">
+		DELETE FROM tbl_host
+		WHERE id = #{id}
+	</delete>
+
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.DefinitionSubServNicDao">
+	<resultMap id="ResultMap" type="com.api.entity.DefinitionSubServNicEntity">
+		<id property="id" column="id" />
+		<result property="nicPhyType" column="nic_phy_type" />
+		<result property="nicHaType" column="nic_ha_type" />
+		<result property="networkBandWidth" column="network_bandwidth" />
+		<association property="definitionSubServ" javaType="com.api.entity.DefinitionSubServEntity">
+			<id property="id" column="defition_subserv_id" />
+		</association>
+	</resultMap>
+
+	<select id="list" parameterType="java.util.Map" resultMap="ResultMap">
+		SELECT dssn.*
+		FROM tbl_definition_subserv_nic dssn 
+		WHERE dssn.defition_subserv_id = #{defitionSubServId}
+	</select>
+
+</mapper>

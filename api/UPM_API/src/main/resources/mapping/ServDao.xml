@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.ServDao">
+	<resultMap id="ResultMap" type="com.api.entity.ServEntity">
+		<id property="id" column="id" />
+		<result property="servBusinessCode" column="serv_business_code" />
+		<result property="servBusinessName" column="serv_business_name" />
+	</resultMap>
+	
+	<insert id="save" parameterType="com.api.entity.ServEntity">
+		INSERT INTO tbl_serv
+		(
+			id,
+			definition_serv_id,
+			order_id,
+			area_id,
+			serv_business_code,
+			serv_business_name,
+			owner,
+			create_datetime,
+			create_user_login_name
+		)
+		VALUE
+		(
+			#{id},
+			#{definitionServ.id},
+			#{order.id},
+			#{area.id},
+			#{servBusinessCode},
+			#{servBusinessName},
+			#{owner},
+			#{createDateTime},
+			#{createUserLoginName}
+		)
+	</insert>
+
+	<delete id="remove">
+		DELETE FROM tbl_serv 
+		WHERE id = #{id}
+	</delete>
+</mapper>

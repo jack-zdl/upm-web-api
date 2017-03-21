@@ -1,7 +1,6 @@
 package com.api.controller;
 
 import java.util.Map;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
@@ -21,7 +20,7 @@ import com.api.util.RespJsonFactory;
  *
  */
 @Controller
-@RequestMapping("/v1.0/login")
+@RequestMapping("/v1.0")
 public class LoginController {
 
 	@Resource

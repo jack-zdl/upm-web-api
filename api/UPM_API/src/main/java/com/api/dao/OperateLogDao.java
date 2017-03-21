@@ -8,6 +8,6 @@ import com.api.entity.OperateLogEntity;
  * @author HCK
  *
  */
-public interface OperateLogDao extends CrudDao<OperateLogEntity>{
-	
+public interface OperateLogDao extends CrudDao<OperateLogEntity> {
+
 }

@@ -24,4 +24,10 @@
         eternal="true"
         overflowToDisk="true"/>
         
+    <cache
+		name="definitionCache"
+        maxElementsInMemory="1000"
+        eternal="true"
+        overflowToDisk="true"/>    
+        
 </ehcache>

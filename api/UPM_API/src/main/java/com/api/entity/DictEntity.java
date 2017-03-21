@@ -3,7 +3,7 @@ package com.api.entity;
 import java.io.Serializable;
 
 /**
- * 字典实例类
+ * 字典实体类
  * 
  * @author HCK
  *

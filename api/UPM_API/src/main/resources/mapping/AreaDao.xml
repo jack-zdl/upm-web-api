@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.AreaDao">
+	<resultMap id="ResultMap" type="com.api.entity.AreaEntity">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="description" column="description" />
+		<result property="enabled" column="enabled" />
+		<result property="createDateTime" column="create_datetime" />
+		<result property="createUserLoginName" column="create_user_login_name" />
+		<association property="site" javaType="com.api.entity.SiteEntity">
+			<id property="id" column="site_id" />
+		</association>
+	</resultMap>
+
+	<select id="list" parameterType="java.util.Map" resultMap="ResultMap">
+		SELECT a.*
+		FROM tbl_area a 
+		WHERE a.site_id = #{siteId}
+		<if test="enabled!=null">
+			AND a.enabled = #{enabled}
+		</if>
+	</select>
+	
+	<select id="get" resultMap="ResultMap">
+		SELECT *
+		FROM tbl_area a 
+		WHERE id = #{id}
+	</select>
+
+	<insert id="save" parameterType="com.api.entity.AreaEntity">
+		INSERT INTO tbl_area
+		(
+			id,
+			site_id,
+			name,
+			description,
+			enabled,
+			create_datetime,
+			create_user_login_name
+		)
+		VALUE
+		(
+			#{id},
+			#{site.id},
+			#{name},
+			#{description},
+			#{enabled},
+			#{createDateTime},
+			#{createUserLoginName}
+		)
+	</insert>
+
+	<delete id="remove">
+		DELETE FROM tbl_area
+		WHERE id = #{id}
+	</delete>
+
+</mapper>

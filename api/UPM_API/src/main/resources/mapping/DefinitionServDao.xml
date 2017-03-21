@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.DefinitionServDao">
+	<resultMap id="ResultMap" type="com.api.entity.DefinitionServEntity">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="icon" column="icon" />
+		<!--
+		<collection property="definitionSubServList" ofType="com.api.entity.DefinitionSubServEntity">
+			<id property="id" column="definition_subserv_id" />
+			<result property="name" column="definition_subserv_name" />
+			<result property="icon" column="definition_subserv_icon" />
+			<result property="type" column="type" />
+			<result property="defaultDataDirSize" column="default_datadir_size" />
+			<result property="defaultDataDirDeviceType" column="default_datadir_device_type" />
+			<result property="defaultLogDirSize" column="default_logdir_size" />
+			<result property="defaultLogDirDeviceType" column="default_logdir_device_type" />
+			<result property="defaultBackupDirSize" column="default_backup_size" />
+			<result property="defaultBackupDirDeviceType" column="default_backup_device_type" />
+			<result property="defaultMaxBackupSpace" column="default_max_backup_space" />
+			<result property="defaultBackupFilesRetention" column="default_backup_files_retention" />
+			<result property="primary" column="primary" />
+			<association property="defalultDefinitionSubServArch" javaType="com.api.entity.DefinitionSubServArchEntity" >
+				<id property="id" column="default_definition_subserv_arch_id"/>
+				<result property="name" column="definition_subserv_arch_name" />
+				<result property="code" column="code" />
+				<result property="highAvailability" column="high_availability" />
+				<result property="consistency" column="consistency" />
+				<result property="capability" column="capability" />
+				<result property="unitNum" column="unit_num" />
+			</association>
+			<association property="defalultDefinitionSubServArch" javaType="com.api.entity.DefinitionSubServUnitScaleEntity" >
+				<id property="id" column="default_definition_subserv_unit_scale_id"/>
+				<result property="name" column="definition_subserv_unit_scale_name" />
+				<result property="cpuNum" column="cpu_num" />
+				<result property="memSize" column="mem_size" />
+				<result property="networkBandwidth" column="network_bandwidth" />
+				<result property="ioWeight" column="io_weight" />				
+			</association>
+		</collection>
+		-->
+	</resultMap>
+	
+	<select id="listNameAndIcon" parameterType="java.util.Map" resultMap="ResultMap">
+		SELECT ds.id, ds.name, ds.icon 
+		FROM tbl_definition_serv ds 
+		WHERE ds.enabled = 1
+	</select>
+	
+	<!--
+	<select id="list" parameterType="java.util.Map" resultMap="ResultMap">
+		SELECT ds.*,
+			dss.id AS definition_subserv_id, dss.name AS definition_subserv_name,
+			dss.icon AS definition_subserv_icon, dss.type, 
+			dss.default_datadir_size, dss.default_datadir_device_type, 
+			dss.default_logdir_size, dss.default_logdir_device_type,
+			dss.default_backup_size, dss.default_backup_device_type,
+			dss.default_max_backup_space, dss.default_backup_files_retention,
+			dss.primary, dss.default_definition_subserv_arch_id, dss.default_definition_subserv_unit_scale_id,
+			dssa.name AS definition_subserv_arch_name, dssa.code, dssa.high_availability,
+			dssa.consistency, dssa.capability, dssa.unit_num,
+			dssus.name AS definition_subserv_unit_scale_name, dssus.cpu_num,
+			dssus.mem_size, dssus.network_bandwidth, dssus.io_weight	
+		FROM tbl_definition_serv ds, 	
+			tbl_definition_subserv dss,
+			tbl_definition_subserv_belongto_serv dssbs,
+			tbl_definition_subserv_arch dssa,
+			tbl_definition_subserv_unit_scale dssus
+		WHERE ds.id = dssbs.definition_serv_id 
+			AND dssbs.definition_subserv_id = dss.id 
+			AND dss.default_definition_subserv_arch_id = dssa.id
+			AND dss.default_definition_subserv_unit_scale_id = dssus.id 
+			AND ds.id = {definitionServId}
+	</select>
+	-->
+</mapper>

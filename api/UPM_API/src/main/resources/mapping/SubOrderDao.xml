@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.SubOrderDao">
+	<resultMap id="ResultMap" type="com.api.entity.SubOrderEntity">
+		<id property="id" column="id" />
+		<result property="dataDirSize" column="data_dir_size" />
+		<result property="dataDirDeviceType" column="data_dir_device_type" />
+		<result property="logDirSize" column="log_dir_size" />
+		<result property="logDirDeviceType" column="log_dir_device_type" />
+		<result property="maxBackupSpace" column="max_backup_space" />
+		<result property="backupFilesRetention" column="backup_files_retention" />
+		<association property="definitionSubServ" javaType="com.api.entity.DefinitionSubServEntity">
+			<id property="id" column="definition_subserv_id" />
+		</association>
+		<association property="subServSoftwareImage" javaType="com.api.entity.SubServSoftwareImageEntity">
+			<id property="id" column="subserv_software_image_id" />
+		</association>
+		<association property="definitionSubServArch" javaType="com.api.entity.DefinitionSubServArchEntity">
+			<id property="id" column="definition_subserv_arch_id" />
+		</association>
+		<association property="definitionSubServUnitScale" javaType="com.api.entity.DefinitionSubServUnitScaleEntity">
+			<id property="id" column="definition_subserv_unit_scale_id" />
+		</association>
+		<association property="order" javaType="com.api.entity.OrderEntity">
+			<id property="id" column="order_id" />
+		</association>
+	</resultMap>
+
+	<insert id="save" parameterType="com.api.entity.SubOrderEntity">
+		INSERT INTO tbl_suborder
+		(
+			id,
+			definition_subserv_id,
+			subserv_software_image_id,
+			definition_subserv_arch_id,
+			definition_subserv_unit_scale_id,
+			data_dir_size,
+			data_dir_device_type,
+			log_dir_size,
+			log_dir_device_type,
+			max_backup_space,
+			backup_files_retention,
+			order_id
+		)
+		VALUE
+		(
+			#{id},
+			#{definitionSubServ.id},
+			#{subServSoftwareImage.id},
+			#{definitionSubServArch.id},
+			#{definitionSubServUnitScale.id},
+			#{dataDirSize},
+			#{dataDirDeviceType},
+			#{logDirSize},
+			#{logDirDeviceType},
+			#{maxBackupSpace},
+			#{backupFilesRetention},
+			#{order.id}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.api.entity.SubOrderEntity">
+		UPDATE tbl_suborder
+		<set>
+			definition_subserv_id = #{definitionSubServ.id},
+			subserv_software_image_id = #{subServSoftwareImage.id},
+			definition_subserv_arch_id = #{definitionSubServArch.id},
+			definition_subserv_unit_scale_id = #{definitionSubServUnitScale.id},
+			data_dir_size = #{dataDirSize},
+			data_dir_device_type = #{dataDirDeviceType},
+			log_dir_size = #{logDirSize},
+			log_dir_device_type = #{logDirDeviceType},
+			max_backup_space = #{maxBackupSpace},
+			backup_files_retention = #{backupFilesRetention},
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="remove">
+		DELETE FROM tbl_suborder
+		WHERE id = #{id}
+	</delete>
+
+</mapper>

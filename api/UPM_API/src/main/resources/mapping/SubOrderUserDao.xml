@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.SubOrderUserDao">
+	<resultMap id="ResultMap" type="com.api.entity.SubOrderUserEntity">
+		<id property="id" column="id" />
+		<result property="username" column="username" />
+		<result property="passwork" column="passwork" />
+		<result property="mappingSubOrderUserId" column="mapping_suborder_user_id" />
+		<result property="owner" column="owner" />
+		<association property="subOrder" javaType="com.api.entity.SubOrderEntity">
+			<id property="id" column="suborder_id" />
+		</association>
+		<association property="definitionUserRole" javaType="com.api.entity.DefinitionUserRoleEntity">
+			<id property="id" column="definition_user_role_id" />
+		</association>
+	</resultMap>
+
+	<insert id="save" parameterType="com.api.entity.SubOrderUserEntity">
+		INSERT INTO tbl_suborder_user
+		(
+			id,
+			suborder_id,
+			username,
+			password,
+			definition_user_role_id,
+			mapping_suborder_user_id,
+			owner
+		)
+		VALUE
+		(
+			#{id},
+			#{subOrder.id},
+			#{username},
+			#{password},
+			#{definitionUserRole.id},
+			#{mappingSubOrderUserId},
+			#{owner}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.api.entity.SubOrderUserEntity">
+		UPDATE tbl_suborder_user
+		<set>
+			username = #{username},
+			password = #{password},
+			definition_user_role_id = #{definitionUserRole.id}
+		</set>
+		WHERE suborder_id = #{subOrder.id} 
+			AND owner != 'root'
+	</update>
+
+	<delete id="remove">
+		DELETE FROM tbl_suborder_user
+		WHERE suborder_id = #{subOrderId}
+	</delete>
+</mapper>

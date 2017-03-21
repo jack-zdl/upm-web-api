@@ -13,7 +13,7 @@
 	<select id="list" resultMap="ResultMap" parameterType="java.util.Map">
 		SELECT a.code, a.name, b.code AS dict_code, b.name AS dict_name 
 		FROM tbl_dict_type a 
-		LEFT JOIN tbl_dict b ON b.dict_type_code = a.code 
+		LEFT JOIN tbl_dict b ON a.code = b.dict_type_code 
 	</select>
 
 </mapper>

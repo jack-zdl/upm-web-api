@@ -21,7 +21,9 @@ import com.api.util.RespJsonFactory;
 @Component
 public class LoginAspect {
 
-	@Pointcut("execution(public * com.api.controller.*.*(..)) && !execution(public * com.api.controller.LoginController.*(..))")
+	@Pointcut("execution(public * com.api.controller.*.*(..)) "
+			+ "&& !execution(public * com.api.controller.LoginController.*(..))  "
+			+ "&& !execution(public * com.api.controller.SelectController.*(..))")
 	public void pointcut() {
 
 	}

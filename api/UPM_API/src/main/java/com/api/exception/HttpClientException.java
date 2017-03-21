@@ -1,5 +1,11 @@
 package com.api.exception;
 
+/**
+ * httpClient异常处理类
+ * 
+ * @author HCK
+ *
+ */
 public class HttpClientException extends Exception {
 
 	/**

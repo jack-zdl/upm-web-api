@@ -19,7 +19,7 @@ public interface UserDao {
 	 * @return
 	 */
 	public UserEntity getUser(Map<String, Object> param);
-	
+
 	/**
 	 * 更新用户最后登录时间
 	 * 

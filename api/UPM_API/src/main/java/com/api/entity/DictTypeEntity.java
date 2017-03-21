@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 字典类型实例类
+ * 字典类型实体类
  * 
  * @author HCK
  *
@@ -20,10 +20,12 @@ public class DictTypeEntity implements Serializable {
 	 * 字典类型项代码
 	 */
 	private String code;
+	
 	/**
 	 * 字典类型项名称
 	 */
 	private String name;
+	
 	/**
 	 * 字典类型集合
 	 */

@@ -24,7 +24,7 @@ public class BaseEntity implements Serializable {
 	/**
 	 * 创建者
 	 */
-	private String createLoginUserName;
+	private String createUserLoginName;
 
 	/**
 	 * 获取创建时间
@@ -48,20 +48,20 @@ public class BaseEntity implements Serializable {
 	/**
 	 * 获取创建者
 	 *
-	 * @return createLoginUserName 创建者
+	 * @return createUserLoginName 创建者
 	 */
-	public String getCreateLoginUserName() {
-		return createLoginUserName;
+	public String getCreateUserLoginName() {
+		return createUserLoginName;
 	}
 
 	/**
 	 * 设置创建者
-	 *
-	 * @param createLoginUserName
+	 * 
+	 * @param createUserLoginName
 	 *            创建者
 	 */
-	public void setCreateLoginUserName(String createLoginUserName) {
-		this.createLoginUserName = createLoginUserName;
+	public void setCreateUserLoginName(String createUserLoginName) {
+		this.createUserLoginName = createUserLoginName;
 	}
 
 	/*
@@ -71,7 +71,7 @@ public class BaseEntity implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "BaseEntity [createDateTime=" + createDateTime + ", createLoginUserName=" + createLoginUserName + "]";
+		return "BaseEntity [createDateTime=" + createDateTime + ", createUserLoginName=" + createUserLoginName + "]";
 	}
 
 }

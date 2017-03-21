@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.SubServDao">
+	<resultMap id="ResultMap" type="com.api.entity.SubServEntity">
+		<id property="id" column="id" />
+		<result property="dataDirSize" column="data_dir_size" />
+	</resultMap>
+
+	<insert id="save" parameterType="com.api.entity.SubServEntity">
+		INSERT INTO tbl_subserv
+		(
+			id,
+			relate_id,
+			serv_id,
+			definition_subserv_id,
+			subserv_software_image_id,
+			definition_subserv_arch_id,
+			definition_subserv_unit_scale_id,
+			data_dir_size,
+			data_dir_device_type,
+			log_dir_size,
+			log_dir_device_type,
+			max_backup_space,
+			backup_files_retention
+		)
+		VALUE
+		(
+			#{id},
+			#{relateId},
+			#{serv.id},
+			#{definitionSubServ.id},
+			#{subServSoftwareImage.id},
+			#{definitionSubServArch.id},
+			#{definitionSubServUnitScale.id},
+			#{dataDirSize},
+			#{dataDirDeviceType},
+			#{logDirSize},
+			#{logDirDeviceType},
+			#{maxBackupSpace},
+			#{backupFilesRetention}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.api.entity.SubOrderEntity">
+		UPDATE tbl_subserv
+		<set>
+			relate_id = #{relateId.id}
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="remove">
+		DELETE FROM tbl_subserv
+		WHERE id = #{id}
+	</delete>
+
+</mapper>

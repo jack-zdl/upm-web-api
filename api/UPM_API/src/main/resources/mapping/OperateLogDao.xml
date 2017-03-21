@@ -3,37 +3,35 @@
 <mapper namespace="com.api.dao.OperateLogDao">
 	<resultMap id="ResultMap" type="com.api.entity.OperateLogEntity">
 		<id property="id" column="id" />
-		<result property="operateModelName" column="operate_model_name" />
-		<result property="operateAction" column="operate_action" />
-		<result property="operateObjId" column="operate_obj_id" />
-		<result property="operateObjName" column="operate_obj_name" />
-		<result property="operateLoginName" column="operate_login_name" />
-		<result property="operateDateTime" column="operate_datetime" />
-		<result property="operateStatus" column="operate_status" />
+		<result property="modelName" column="model_name" />
+		<result property="action" column="action" />
+		<result property="objId" column="obj_id" />
+		<result property="objName" column="obj_name" />
+		<result property="createDateTime" column="create_datetime" />
+		<result property="createUserLoginName" column="create_user_login_name" />
 	</resultMap>
 
 	<insert id="save" parameterType="com.api.entity.OperateLogEntity">
 		INSERT INTO tbl_operate_log 
 		(
 			id,
-			operate_model_name, 
-			operate_action,
-			operate_obj_id,
-			operate_obj_name,
-			operate_login_name,
-			operate_datetime,
-			operate_status
+			model_name, 
+			action,
+			obj_id,
+			obj_name,
+			create_datetime,
+			create_user_login_name
 		)
 		VALUES 
 		(
 			#{id},
-			#{operateModelName},
-			#{operateAction},
-			#{operateObjId},
-			#{operateObjName},
-			#{operateLoginName},
-			#{operateDateTime},
-			#{operateStatus}
+			#{modelName},
+			#{action},
+			#{objId},
+			#{objName},
+			#{createDateTime},
+			#{createUserLoginName}
 		)							
 	</insert>
+	
 </mapper>

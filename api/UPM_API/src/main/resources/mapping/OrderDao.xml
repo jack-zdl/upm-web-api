@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.OrderDao">
+	<resultMap id="ResultMap" type="com.api.entity.OrderEntity">
+		<id property="id" column="id" />
+		<result property="servBusinessCode" column="serv_business_code" />
+		<result property="servBusinessName" column="serv_business_name" />
+		<result property="type" column="type" />
+		<result property="status" column="status" />
+		<result property="msg" column="msg" />
+		<result property="associateOrderId" column="associate_order_id" />
+		<result property="createDateTime" column="create_datetime" />
+		<result property="createUserLoginName" column="create_user_login_name" />
+		<association property="definitionServ" javaType="com.api.entity.DefinitionServEntity">
+			<id property="id" column="definition_serv_id" />
+			<result property="name" column="definition_serv_name" />
+		</association>
+		<association property="site" javaType="com.api.entity.SiteEntity">
+			<id property="id" column="site_id" />
+			<result property="name" column="site_name" />
+		</association>
+		<association property="area" javaType="com.api.entity.AreaEntity">
+			<id property="id" column="area_id" />
+			<result property="name" column="area_name" />
+		</association>
+		<collection property="subOrderList" ofType="com.api.entity.SubOrderEntity">
+			<id property="id" column="suborder_id" />
+			<result property="dataDirSize" column="data_dir_size" />
+			<result property="dataDirDeviceType" column="data_dir_device_type" />
+			<result property="logDirSize" column="log_dir_size" />
+			<result property="logDirDeviceType" column="log_dir_device_type" />
+			<result property="maxBackupSpace" column="max_backup_space" />
+			<result property="backupFilesRetention" column="backup_files_retention" />
+			<association property="definitionSubServ" javaType="com.api.entity.DefinitionSubServEntity">
+				<id property="id" column="definition_subserv_id" />
+				<id property="name" column="definition_subserv_name" />
+				<id property="primary" column="primary" />
+				<id property="priority" column="priority" />
+			</association>
+			<association property="subServSoftwareImage" javaType="com.api.entity.SubServSoftwareImageEntity">
+				<id property="id" column="subserv_software_image_id" />
+				<result property="patchVersion" column="patch_version" />
+				<association property="definitionSubServSoftware" javaType="com.api.entity.DefinitionSubServSoftwareEntity">
+					<id property="id" column="definition_subserv_software_id" />
+					<result property="majorVersion" column="major_version" />
+					<result property="minorVersion" column="minor_version" />
+				</association>
+			</association>
+			<association property="definitionSubServArch" javaType="com.api.entity.DefinitionSubServArchEntity">
+				<id property="id" column="definition_subserv_arch_id" />
+				<result property="code" column="code" />
+				<result property="name" column="definition_subserv_arch_name" />
+				<result property="type" column="definition_subserv_arch_type" />
+				<result property="unitNum" column="unit_num" />
+			</association>
+			<association property="definitionSubServUnitScale" javaType="com.api.entity.DefinitionSubServUnitScaleEntity">
+				<id property="id" column="definition_subserv_unit_scale_id" />
+				<result property="name" column="definition_subserv_unit_scale_name" />
+				<result property="cpuNum" column="cpu_num" />
+				<result property="memSize" column="mem_size" />
+			</association>
+			<collection property="subOrderUserList" ofType="com.api.entity.SubOrderUserEntity">
+				<id property="id" column="suborder_user_id" />
+				<result property="username" column="username" />
+				<result property="password" column="password" />
+				<result property="owner" column="owner" />
+				<association property="definitionUserRole" javaType="com.api.entity.DefinitionUserRoleEntity">
+					<id property="id" column="definition_user_role_id" />
+					<result property="name" column="definition_user_role_name" />
+					<result property="privilege" column="privilege" />
+					<result property="visible" column="visible" />
+				</association>
+			</collection>
+			<collection property="subOrderNicList" ofType="com.api.entity.SubOrderNicEntity">
+				<id property="id" column="suborder_nic_id" />
+				<result property="networkBandWidth" column="network_bandwidth" />
+			</collection>
+		</collection>
+	</resultMap>
+	
+	<select id="list" parameterType="java.util.Map" resultMap="ResultMap">
+		SELECT ds.id AS definition_serv_id, ds.name AS definition_serv_name,
+			s.id AS site_id, s.name AS site_name,
+			a.id AS area_id, a.name AS area_name,
+			o.id, o.serv_business_code, o.serv_business_name, o.status,
+			o.create_datetime, o.create_user_login_name,
+			so.id AS suborder_id, so.data_dir_size, so.data_dir_device_type,
+			so.log_dir_size, so.log_dir_device_type,
+			so.backup_files_retention, so.max_backup_space,
+			dss.id AS definition_subserv_id, dss.name AS definition_subserv_name,
+			dssa.id AS definition_subserv_arch_id, dssa.code, dssa.name AS definition_subserv_arch_name,
+			dssa.type AS definition_subserv_arch_type, dssa.unit_num,
+			dssus.id AS definition_subserv_unit_scale_id, dssus.name AS definition_subserv_unit_scale_name,
+			sssi.id AS subserv_software_image_id, sssi.patch_version, 
+			dsssw.id AS definition_subserv_software_id, dsssw.major_version, dsssw.minor_version,
+			dsss.primary, dsss.priority,
+			sou.id AS suborder_user_id, sou.username, sou.password, sou.owner,
+			dur.id AS definition_user_role_id, dur.name, dur.privilege
+		FROM tbl_order o,
+			tbl_definition_serv ds,
+			tbl_site s,
+			tbl_area a,
+			tbl_suborder so LEFT JOIN tbl_suborder_user sou ON so.id = sou.suborder_id
+			LEFT JOIN tbl_definition_user_role dur ON sou.definition_user_role_id = dur.id, 
+			tbl_definition_subserv dss,
+			tbl_definition_subserv_arch dssa,
+			tbl_definition_subserv_unit_scale dssus,
+			tbl_subserv_software_image sssi,
+			tbl_definition_subserv_software dsssw,
+			tbl_definition_serv_subserv dsss
+		WHERE o.definition_serv_id = ds.id
+			AND o.site_id = s.id 
+			AND o.area_id = a.id 
+			AND so.order_id = o.id 
+			AND so.definition_subserv_id = dss.id
+			AND so.definition_subserv_arch_id = dssa.id
+			AND so.definition_subserv_unit_scale_id = dssus.id
+			AND so.subserv_software_image_id = sssi.id 
+			AND sssi.definition_subserv_software_id = dsssw.id
+			AND dsss.definition_serv_id = ds.id
+			AND dsss.definition_subserv_id = dss.id
+			AND dsss.definition_subserv_arch_id = dssa.id
+		<if test="definitionServId!=null and definitionServId !=''">
+		 	AND ds.id = #{definitionServId}
+		</if>
+		<if test="primary!=null">
+		 	AND dsss.primary = #{primary}
+		</if>
+		<if test="createUserLoginName!=null and createUserLoginName !=''">
+		 	AND o.create_user_login_name = #{createUserLoginName}
+		</if>
+	</select>
+	
+	<select id="get" resultMap="ResultMap">
+		SELECT ds.id AS definition_serv_id, ds.name AS definition_serv_name,
+			s.id AS site_id, s.name AS site_name,
+			a.id AS area_id, a.name AS area_name,
+			o.id, o.serv_business_code, o.serv_business_name, o.status,
+			o.create_datetime, o.create_user_login_name,
+			so.id AS suborder_id, so.data_dir_size, so.data_dir_device_type,
+			so.log_dir_size, so.log_dir_device_type,
+			so.backup_files_retention, so.max_backup_space,
+			dss.id AS definition_subserv_id, dss.name AS definition_subserv_name,
+			dssa.id AS definition_subserv_arch_id, dssa.code, dssa.name AS definition_subserv_arch_name,
+			dssa.type AS definition_subserv_arch_type, dssa.unit_num,
+			dssus.id AS definition_subserv_unit_scale_id, dssus.name AS definition_subserv_unit_scale_name,
+			dssus.cpu_num, dssus.mem_size,
+			sssi.id AS subserv_software_image_id, sssi.patch_version, 
+			dsssw.id AS definition_subserv_software_id, dsssw.major_version, dsssw.minor_version,
+			dsss.primary, dsss.priority,
+			sou.id AS suborder_user_id, sou.username, sou.password, sou.owner,
+			dur.id AS definition_user_role_id, dur.name, dur.privilege,
+			son.id AS suborder_nic_id, son.network_bandwidth
+		FROM tbl_order o,
+			tbl_definition_serv ds,
+			tbl_site s,
+			tbl_area a,
+			tbl_suborder so LEFT JOIN tbl_suborder_user sou ON so.id = sou.suborder_id
+			LEFT JOIN tbl_definition_user_role dur ON sou.definition_user_role_id = dur.id, 
+			tbl_suborder_nic son,
+			tbl_definition_subserv dss,
+			tbl_definition_subserv_arch dssa,
+			tbl_definition_subserv_unit_scale dssus,
+			tbl_subserv_software_image sssi,
+			tbl_definition_subserv_software dsssw,
+			tbl_definition_serv_subserv dsss
+		WHERE o.definition_serv_id = ds.id
+			AND o.site_id = s.id 
+			AND o.area_id = a.id 
+			AND so.order_id = o.id 
+			AND so.definition_subserv_id = dss.id
+			AND so.definition_subserv_arch_id = dssa.id
+			AND so.definition_subserv_unit_scale_id = dssus.id
+			AND so.subserv_software_image_id = sssi.id 
+			AND sssi.definition_subserv_software_id = dsssw.id
+			AND dsss.definition_serv_id = ds.id
+			AND dsss.definition_subserv_id = dss.id
+			AND dsss.definition_subserv_arch_id = dssa.id
+			AND son.suborder_id = so.id
+			AND o.id = #{id}
+	</select>
+
+	<insert id="save" parameterType="com.api.entity.OrderEntity">
+		INSERT INTO tbl_order
+		(
+			id,
+			definition_serv_id,
+			site_id,
+			area_id,
+			serv_business_code,
+			serv_business_name,
+			type,
+			status,
+			msg,
+			associate_order_id,
+			create_datetime,
+			create_user_login_name
+		)
+		VALUE
+		(
+			#{id},
+			#{definitionServ.id},
+			#{site.id},
+			#{area.id},
+			#{servBusinessCode},
+			#{servBusinessName},
+			#{type},
+			#{status},
+			#{msg},
+			#{associateOrderId},
+			#{createDateTime},
+			#{createUserLoginName}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.api.entity.OrderEntity">
+		UPDATE tbl_order
+		<set>
+			site_id = #{site.id},
+			area_id = #{area.id},
+			serv_business_code = #{servBusinessCode},
+			serv_business_name = #{servBusinessName}
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateStatus" parameterType="com.api.entity.OrderEntity">
+		UPDATE tbl_order
+		<set>
+			status = #{status},
+			msg = #{msg}
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<delete id="remove">
+		DELETE FROM tbl_order 
+		WHERE id = #{id}
+	</delete>
+</mapper>

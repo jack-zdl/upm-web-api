@@ -6,7 +6,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import com.api.dao.DictTypeDao;
 import com.api.entity.DictTypeEntity;
-import com.api.exception.APIException;
 
 /**
  * 字典类型项业务处理类
@@ -21,7 +20,7 @@ public class DictTypeService {
 	protected DictTypeDao dictTypeDao;
 
 	@Cacheable("dictTypeCache")
-	public List<DictTypeEntity> listDictTypeFromCache() throws APIException {
+	public List<DictTypeEntity> listDictTypeFromCache() {
 		return dictTypeDao.list(null);
 	}
 	

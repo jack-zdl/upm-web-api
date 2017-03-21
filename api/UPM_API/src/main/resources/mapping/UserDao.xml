@@ -27,8 +27,8 @@
 			g.id AS user_group_id, g.name AS user_group_name, 
 			r.code, r.name AS user_role_name, r.level, r.description, r.visible 
 		FROM tbl_user u 
-		LEFT JOIN tbl_user_group g ON g.id = u.user_group_id 
-		LEFT JOIN tbl_user_role r ON r.code = u.user_role_code 
+		LEFT JOIN tbl_user_group g ON u.user_group_id = g.id 
+		LEFT JOIN tbl_user_role r ON u.user_role_code = r.code 
 		WHERE (u.login_name = #{loginName} 
 		  	OR u.email = #{loginName} 
 		  	OR u.telephone = #{loginName})

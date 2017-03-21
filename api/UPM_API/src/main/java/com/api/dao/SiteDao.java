@@ -8,6 +8,6 @@ import com.api.entity.SiteEntity;
  * @author HCK
  *
  */
-public interface SiteDao extends CrudDao<SiteEntity>{
-	
+public interface SiteDao extends CrudDao<SiteEntity> {
+
 }

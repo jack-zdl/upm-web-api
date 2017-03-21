@@ -16,6 +16,11 @@ public class BaseDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * 唯一编码
+	 */
+	private String id;
+
+	/**
 	 * 创建时间
 	 */
 	private String createDateTime;
@@ -24,6 +29,25 @@ public class BaseDto implements Serializable {
 	 * 创建者
 	 */
 	private String createLoginUserName;
+
+	/**
+	 * 获取唯一编码
+	 *
+	 * @return id 唯一编码
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * 设置唯一编码
+	 * 
+	 * @param id
+	 *            唯一编码
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	/**
 	 * 获取创建时间
@@ -70,7 +94,8 @@ public class BaseDto implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "BaseDto [createDateTime=" + createDateTime + ", createLoginUserName=" + createLoginUserName + "]";
+		return "BaseDto [id=" + id + ", createDateTime=" + createDateTime + ", createLoginUserName="
+				+ createLoginUserName + "]";
 	}
 
 }

@@ -8,6 +8,6 @@ import com.api.entity.DictTypeEntity;
  * @author HCK
  *
  */
-public interface DictTypeDao extends CrudDao<DictTypeEntity>{
-	
+public interface DictTypeDao extends CrudDao<DictTypeEntity> {
+
 }

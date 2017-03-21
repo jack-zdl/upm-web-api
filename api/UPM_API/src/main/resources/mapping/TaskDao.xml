@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.TaskDao">
+	<resultMap id="ResultMap" type="com.api.entity.TaskEntity">
+		<id property="id" column="id" />
+		<result property="objType" column="obj_type" />
+		<result property="objId" column="obj_id" />
+		<result property="actionType" column="action_type" />
+		<result property="startDateTime" column="start_datetime" />
+		<result property="endDateTime" column="end_datetime" />
+		<result property="status" column="status" />
+		<result property="msg" column="msg" />
+		<result property="createUserLoginName" column="create_user_login_name" />
+		<association property="operateLog" javaType="com.api.entity.OperateLogEntity">
+			<id property="id" column="operate_log_id"/>
+		</association>
+	</resultMap>
+	
+	<select id="getLatestTaskByObjId" resultMap="ResultMap">
+		SELECT t.* 
+		FROM tbl_task t 
+		WHERE obj_id = #{objId} 
+		ORDER BY start_datetime DESC 
+		LIMIT 0,1
+	</select>
+
+	<insert id="save" parameterType="com.api.entity.TaskEntity">
+		INSERT INTO tbl_task
+		(
+			id,
+			obj_type, 
+			obj_id,
+			action_type,
+			start_datetime,
+			end_datetime,
+			status,
+			msg,
+			operate_log_id,
+			create_user_login_name
+		)
+		VALUES 
+		(
+			#{id},
+			#{objType},
+			#{objId},
+			#{actionType},
+			#{startDateTime},
+			#{endDateTime},
+			#{status},
+			#{msg},
+			#{operateLog.id},
+			#{createUserLoginName}
+		)							
+	</insert>
+	
+	<update id="update" parameterType="com.api.entity.TaskEntity">
+		UPDATE tbl_task 
+		<set>
+			end_datetime = #{endDateTime},
+			status = #{status},
+			msg = #{msg}
+		</set>
+		WHERE id = #{id}
+	</update>
+</mapper>

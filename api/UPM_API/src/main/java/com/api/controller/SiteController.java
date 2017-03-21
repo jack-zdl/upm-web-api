@@ -24,7 +24,7 @@ import com.api.util.RespJsonFactory;
  *
  */
 @Controller
-@RequestMapping("v1.0/site")
+@RequestMapping("v1.0/sites")
 public class SiteController {
 
 	@Resource
@@ -34,10 +34,12 @@ public class SiteController {
 	 * 【查询】
 	 * 
 	 * @param request
+	 *            HttpServletRequest对象
 	 * @param param
-	 * @return
+	 *            请求参数
+	 * @return 操作结果
 	 */
-	@RequestMapping(value = "list", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public RespJson listSite(HttpServletRequest request, @RequestParam Map<String, Object> param) {
 		RespJson respJson = null;
@@ -50,15 +52,17 @@ public class SiteController {
 	}
 
 	/**
-	 * 【新增】
+	 * 【注册】
 	 * 
 	 * @param request
+	 *            HttpServletRequest对象
 	 * @param param
-	 * @return
+	 *            请求参数
+	 * @return 操作结果
 	 */
-	@RequestMapping(value = "save", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public RespJson saveSite(HttpServletRequest request, @RequestBody Map<String, Object> param) {
+	public RespJson registerSite(HttpServletRequest request, @RequestBody Map<String, Object> param) {
 		RespJson respJson = null;
 		try {
 			respJson = siteService.save(request, param);
@@ -69,15 +73,17 @@ public class SiteController {
 	}
 
 	/**
-	 * 【删除】
+	 * 【注销】
 	 * 
 	 * @param request
-	 * @param param
-	 * @return
+	 *            HttpServletRequest对象
+	 * @param siteId
+	 *            站点编码
+	 * @return 操作结果
 	 */
-	@RequestMapping(value = "remove/{siteId}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{siteId}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public RespJson removeSite(HttpServletRequest request, @PathVariable("siteId") String siteId) {
+	public RespJson deregisterSite(HttpServletRequest request, @PathVariable("siteId") String siteId) {
 		RespJson respJson = null;
 		try {
 			respJson = siteService.remove(request, siteId);
@@ -86,5 +92,5 @@ public class SiteController {
 		}
 		return respJson;
 	}
-	
+
 }

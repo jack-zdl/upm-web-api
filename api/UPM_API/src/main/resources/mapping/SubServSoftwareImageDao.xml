@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.SubServSoftwareImageDao">
+	<resultMap id="ResultMap" type="com.api.entity.SubServSoftwareImageEntity">
+		<id property="id" column="id" />
+		<result property="patchVersion" column="patch_version" />
+		<result property="enabled" column="enabled" />
+		<result property="relateId" column="relate_id" />
+		<result property="createDateTime" column="create_datetime" />
+		<result property="createUserLoginName" column="create_user_login_name" />
+		<association property="definitionSubServSoftware" javaType="com.api.entity.DefinitionSubServSoftwareEntity">
+			<id property="id" column="definition_subserv_software_id" />
+			<result property="majorVersion" column="major_version" />
+			<result property="minorVersion" column="minor_version" />
+			<association property="definitionSubServ" javaType="com.api.entity.DefinitionSubServEntity">
+				<id property="id" column="definition_subserv_id" />
+				<result property="name" column="name" />
+				<result property="icon" column="icon" />
+			</association>
+		</association>
+		<association property="site" javaType="com.api.entity.SiteEntity">
+			<id property="id" column="site_id" />
+		</association>
+	</resultMap>
+
+	<select id="list" parameterType="java.util.Map" resultMap="ResultMap">
+		SELECT sssi.*, 
+			 dsss.definition_subserv_id, 
+			 dsss.major_version, dsss.minor_version, 
+			 dss.name, dss.icon 
+		FROM tbl_subserv_software_image sssi, 
+			 tbl_definition_subserv_software dsss, 
+			 tbl_definition_subserv dss 
+		WHERE sssi.definition_subserv_software_id = dsss.id
+			AND dsss.definition_subserv_id = dss.id
+			AND sssi.site_id = #{siteId}
+	</select>
+	
+	<select id="listPrimarySubServSoftwareImageVersion" parameterType="java.util.Map" resultMap="ResultMap">
+		SELECT DISTINCT sssi.id, sssi.definition_subserv_software_id, sssi.patch_version,
+			dsssw.definition_subserv_id, dsssw.major_version, dsssw.minor_version,
+			dsss.definition_serv_id
+		FROM tbl_subserv_software_image sssi,
+			tbl_definition_subserv_software dsssw,
+			tbl_definition_subserv dss,
+			tbl_definition_serv_subserv dsss
+		WHERE sssi.definition_subserv_software_id = dsssw.id
+			AND dsssw.definition_subserv_id = dss.id
+			AND dsss.definition_subserv_id = dss.id
+			AND dsss.primary = 1 
+			AND sssi.site_id = #{siteId}
+			AND dsss.definition_serv_id = #{definitionServId}
+		<if test="enabled!=null">
+		 	AND sssi.enabled = #{enabled}
+		</if>
+		ORDER BY dsssw.major_version DESC, 
+			dsssw.minor_version DESC, 
+			sssi.patch_version DESC	
+	</select>
+	
+	<select id="listSubServSoftwareImageVersion" parameterType="java.util.Map" resultMap="ResultMap">
+		SELECT sssi.id, sssi.definition_subserv_software_id, sssi.patch_version, 
+			 dsssw.definition_subserv_id, dsssw.major_version, dsssw.minor_version
+		FROM tbl_subserv_software_image sssi, 
+			tbl_definition_subserv_software dsssw
+		WHERE sssi.definition_subserv_software_id = dsssw.id 
+			AND sssi.site_id = #{siteId} 
+			AND dsssw.definition_subserv_id = #{definitionSubServId}
+		<if test="enabled!=null">
+		 	AND sssi.enabled = #{enabled}
+		</if>
+		ORDER BY dsssw.major_version DESC, 
+			dsssw.minor_version DESC, 
+			sssi.patch_version DESC	
+	</select>
+	
+	<select id="get" resultMap="ResultMap">
+		SELECT sssi.*, 
+			 dsss.definition_subserv_id, 
+			 dsss.major_version, dsss.minor_version, 
+			 dss.name
+		FROM tbl_subserv_software_image sssi, 
+			 tbl_definition_subserv_software dsss, 
+			 tbl_definition_subserv dss
+		WHERE sssi.definition_subserv_software_id = dsss.id
+		  AND dsss.definition_subserv_id = dss.id 
+		  AND sssi.id = #{id}
+	</select>
+
+	<insert id="save" parameterType="com.api.entity.SubServSoftwareImageEntity">
+		INSERT INTO tbl_subserv_software_image 
+		(
+			id,
+			definition_subserv_software_id, 
+			patch_version,
+			site_id,
+			relate_id,
+			enabled,
+			create_datetime,
+			create_user_login_name
+		)
+		VALUES 
+		(
+			#{id},
+			#{definitionSubServSoftware.id},
+			#{patchVersion},
+			#{site.id},
+			#{relateId},
+			#{enabled},
+			#{createDateTime},
+			#{createUserLoginName}
+		)							
+	</insert>
+	
+	<update id="update" parameterType="com.api.entity.SubServSoftwareImageEntity">
+		UPDATE tbl_subserv_software_image
+		<set>
+			relate_id = #{relateId}
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="remove">
+		DELETE FROM tbl_subserv_software_image
+		WHERE id = #{id}
+	</delete>
+</mapper>

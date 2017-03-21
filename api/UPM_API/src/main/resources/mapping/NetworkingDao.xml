@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.NetworkingDao">
+	<resultMap id="ResultMap" type="com.api.entity.NetworkingEntity">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="startIp" column="start_ip" />
+		<result property="endIp" column="end_ip" />
+		<result property="vlanId" column="vlan_id" />
+		<result property="prefix" column="prefix" />
+		<result property="gateway" column="gateway" />
+		<result property="enabled" column="enabled" />
+		<result property="createDateTime" column="create_datetime" />
+		<result property="createUserLoginName" column="create_user_login_name" />
+		<association property="area" javaType="com.api.entity.AreaEntity">
+			<id property="id" column="area_id" />
+			<result property="name" column="area_name" />
+			<association property="site" javaType="com.api.entity.SiteEntity">
+				<id property="id" column="site_id" />
+			</association>
+		</association>
+	</resultMap>
+
+	<select id="list" parameterType="java.util.Map" resultMap="ResultMap">
+		SELECT n.*, a.name AS area_name 
+		FROM tbl_networking n, tbl_area a 
+		WHERE n.area_id = a.id
+		<if test="siteId!=null and siteId!=''">
+		 	AND a.site_id = #{siteId}
+		</if>
+		<if test="enabled!=null">
+			AND n.enabled = #{enabled}
+		</if>
+		<if test="areaId!=null and areaId!=''">
+			AND n.area_id = #{areaId}
+		</if>
+	</select>
+
+	<select id="get" resultMap="ResultMap">
+		SELECT n.*, a.site_id 
+		FROM tbl_networking n, tbl_area a
+		WHERE n.area_id = a.id 
+		  AND n.id = #{id}
+	</select>
+
+	<insert id="save" parameterType="com.api.entity.NetworkingEntity">
+		INSERT INTO tbl_networking
+		(
+			id,
+			area_id,
+			name,
+			start_ip,
+			end_ip,
+			vlan_id,
+			prefix,
+			gateway,
+			enabled,
+			create_datetime,
+			create_user_login_name
+		)
+		VALUE
+		(
+			#{id},
+			#{area.id},
+			#{name},
+			#{startIp},
+			#{endIp},
+			#{vlanId},
+			#{prefix},
+			#{gateway},
+			#{enabled},
+			#{createDateTime},
+			#{createUserLoginName}
+		)
+	</insert>
+
+	<delete id="remove">
+		DELETE FROM tbl_networking
+		WHERE id = #{id}
+	</delete>
+
+</mapper>

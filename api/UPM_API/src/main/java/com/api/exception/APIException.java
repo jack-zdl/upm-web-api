@@ -1,5 +1,11 @@
 package com.api.exception;
 
+/**
+ * API异常处理类
+ * 
+ * @author HCK
+ *
+ */
 public class APIException extends Exception {
 
 	/**

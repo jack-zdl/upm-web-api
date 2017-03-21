@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.NfsBackupDao">
+	<resultMap id="ResultMap" type="com.api.entity.NfsBackupEntity">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="nfsIp" column="nfs_ip" />
+		<result property="nfsDir" column="nfs_dir" />
+		<result property="nfsMountDir" column="nfs_mount_dir" />
+		<result property="nfsMountOpts" column="nfs_mount_opts" />
+		<result property="enabled" column="enabled" />
+		<result property="createDateTime" column="create_datetime" />
+		<result property="createUserLoginName" column="create_user_login_name" />
+		<association property="site" javaType="com.api.entity.SiteEntity">
+			<id property="id" column="site_id" />
+		</association>
+	</resultMap>
+
+	<select id="list" parameterType="java.util.Map" resultMap="ResultMap">
+		SELECT b.*
+		FROM tbl_nfs_backup b 
+		WHERE b.site_id = #{siteId}
+		<if test="enabled!=null">
+			AND b.enabled = #{enabled}
+		</if>
+	</select>
+	
+	<select id="getByAreaId" resultMap="ResultMap">
+		SELECT DISTINCT nfs.*  
+		FROM tbl_cluster c,
+			tbl_nfs_backup nfs
+		WHERE c.nfs_backup_id = nfs.id
+			AND area_id = #{areaId}
+	</select>
+	
+	<select id="get" resultMap="ResultMap">
+		SELECT b.*
+		FROM tbl_nfs_backup b 
+		WHERE b.id = #{id}
+	</select>
+
+	<insert id="save" parameterType="com.api.entity.NfsBackupEntity">
+		INSERT INTO tbl_nfs_backup
+		(
+			id,
+			site_id,
+			name,
+			nfs_ip,
+			nfs_dir,
+			nfs_mount_dir,
+			nfs_mount_opts,
+			enabled,
+			create_datetime,
+			create_user_login_name
+		)
+		VALUE
+		(
+			#{id},
+			#{site.id},
+			#{name},
+			#{nfsIp},
+			#{nfsDir},
+			#{nfsMountDir},
+			#{nfsMountOpts},
+			#{enabled},
+			#{createDateTime},
+			#{createUserLoginName}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.api.entity.NfsBackupEntity">
+		UPDATE tbl_nfs_backup 
+		<set>
+			name = #{name},
+			nfs_ip = #{nfsIp},
+			nfs_dir = #{nfsDir},
+			nfs_mount_dir = #{nfsMountDir},
+			nfs_mount_opts = #{nfsMountOpts},
+			enabled = #{enabled}
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="remove">
+		DELETE FROM tbl_nfs_backup
+		WHERE id = #{id}
+	</delete>
+
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.dao.DefinitionDao">
+	<resultMap id="ResultMap" type="com.api.entity.DefinitionEntity">
+		<id property="dictCode" column="dict_code" />
+		<result property="code" column="code" />
+	</resultMap>
+	
+	<select id="list" parameterType="java.util.Map" resultMap="ResultMap">
+		SELECT *
+		FROM tbl_definition
+	</select>
+		
+</mapper>
